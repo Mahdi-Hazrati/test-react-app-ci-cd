@@ -50,8 +50,7 @@ jobs:
         run: |
           git add -A
           git commit -m "Build and deploy React app to gh-pages"
-      # Push the changes to the gh-pages branch
-          git push -f
+          git push
           
 
 # Here's a quick overview of what this workflow does:
