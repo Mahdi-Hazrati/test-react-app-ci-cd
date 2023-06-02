@@ -50,14 +50,9 @@ jobs:
         run: |
           git add -A
           git commit -m "Build and deploy React app to gh-pages"
-          
       # Push the changes to the gh-pages branch
-      - name: Push Changes to gh-pages Branch
-        run:  git push
-        with:
-          branch: gh-pages
-          github_token: ${{ secrets.PAT_TOKEN }}
-
+          git push -f
+          
 
 # Here's a quick overview of what this workflow does:
 # It listens for pushes to the master branch.
