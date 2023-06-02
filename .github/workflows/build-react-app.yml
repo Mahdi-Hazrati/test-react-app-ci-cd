@@ -42,7 +42,7 @@ jobs:
         run: |
           mkdir -p .deploy
           mv build/* .deploy/
-          git checkout gh-pages
+          git checkout -b gh-pages
           rsync -av .deploy/ .
           
       # Commit the changes to the gh-pages branch
