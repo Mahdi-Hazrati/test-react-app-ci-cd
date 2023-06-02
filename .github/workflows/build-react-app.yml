@@ -53,7 +53,7 @@ jobs:
           
       # Push the changes to the gh-pages branch
       - name: Push Changes to gh-pages Branch
-        uses: ad-m/github-push-action@master
+        run:  git push
         with:
           branch: gh-pages
           github_token: ${{ secrets.PAT_TOKEN }}
