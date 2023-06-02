@@ -42,7 +42,7 @@ jobs:
         run: |
           mkdir -p .deploy
           mv build/* .deploy/
-          git checkout -b gh-pages
+          git checkout -b gh-pages || git branch gh-pages
           rsync -av .deploy/ .
           
       # Commit the changes to the gh-pages branch
@@ -56,9 +56,7 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           branch: gh-pages
-
-
-
+          github_token: ${{ secrets.PAT_TOKEN }}
 
 
 # Here's a quick overview of what this workflow does:
