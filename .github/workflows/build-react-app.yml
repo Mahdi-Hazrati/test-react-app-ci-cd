@@ -1,0 +1,71 @@
+name: Build and Deploy React App Test
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  REACT_APP_BASEURL: https://Mahdi-Hazrati.github.io/test-react-app-ci-cd
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout the code from the repo
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        
+      # Install Node.js (required for building the React app)
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.x'
+          
+      # Install dependencies and build the React app
+      - name: Install Dependencies and Build React App
+        run: |
+          npm install
+          npm run build --if-present
+          
+      # Configure git user
+      - name: Configure Git User
+        env:
+          GIT_USERNAME: Mahdi Hazrati
+          GIT_USEREMAIL: MahdiHazratiMailBox@gmail.com
+        run: |
+          git config --local user.name "${GIT_USERNAME}"
+          git config --local user.email "${GIT_USEREMAIL}"
+      
+      # Copy the built files to the gh-pages branch
+      - name: Copy Built Files to gh-pages Branch
+        run: |
+          mkdir -p .deploy
+          mv build/* .deploy/
+          git checkout gh-pages
+          rsync -av .deploy/ .
+          
+      # Commit the changes to the gh-pages branch
+      - name: Commit Changes to gh-pages Branch
+        run: |
+          git add -A
+          git commit -m "Build and deploy React app to gh-pages"
+          
+      # Push the changes to the gh-pages branch
+      - name: Push Changes to gh-pages Branch
+        uses: ad-m/github-push-action@master
+        with:
+          branch: gh-pages
+
+
+
+
+
+# Here's a quick overview of what this workflow does:
+# It listens for pushes to the master branch.
+# When a push event is triggered, it checks out the code from the repo and sets up Node.js.
+# It then installs any dependencies and builds the React app.
+# Next, it configures Git user information and copies the built files to the gh-pages branch.
+# It commits the changes to the gh-pages branch with a commit message of "Build and deploy React app to gh-pages".
+# Finally, it pushes the changes to the remote gh-pages branch.
+# Note that you'll need to replace <username> and <repository> in the REACT_APP_BASEURL environment variable with your actual GitHub username and repository name, respectively. This ensures that the React app can correctly resolve any relative URLs when deployed to the GitHub Pages domain. Also, make sure that the gh-pages branch exists in your GitHub repo before running this workflow.
