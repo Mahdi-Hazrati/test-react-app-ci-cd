@@ -6,7 +6,7 @@ on:
       - master
 
 env:
-  REACT_APP_BASEURL: https://Mahdi-Hazrati.github.io/test-react-app-ci-cd
+  REACT_APP_BASEURL: https://mahdi-hazrati.github.io/test-react-app-ci-cd
 
 jobs:
   build-and-deploy:
