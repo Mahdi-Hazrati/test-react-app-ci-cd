@@ -1,4 +1,4 @@
-name: React Workflow
+name: Build and Deploy React App Test
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
       - name: Install React App Dependencies
         run: |
           npm install
-      - name: Production Build of  React App
+      - name: Build React App
         run: |
           npm run build --if-present
           
@@ -38,21 +38,12 @@ jobs:
           git config --local user.name "${GIT_USERNAME}"
           git config --local user.email "${GIT_USEREMAIL}"
       
-      # Remove all existing files in the gh-pages branch
-      - name: Remove Existing Files in gh-pages Branch
-        run: |
-          git checkout gh-pages
-          rm -rf *
-          git commit -m "Remove existing files from gh-pages"
-          git push
-          git checkout master
-      
       # Copy the built files to the gh-pages branch
       - name: Copy Built Files to gh-pages Branch
         run: |
           mkdir -p .deploy
           mv build/* .deploy/
-          git checkout gh-pages
+          git checkout -b gh-pages || git branch gh-pages
           rsync -av .deploy/ .
           
       # Commit the changes to the gh-pages branch
@@ -60,4 +51,5 @@ jobs:
         run: |
           git add .
           git commit -m "Build and deploy React app to gh-pages"
-          git push
+          git push --set-upstream origin gh-pages
+          
