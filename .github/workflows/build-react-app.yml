@@ -42,9 +42,10 @@ jobs:
       - name: Remove Existing Files in gh-pages Branch
         run: |
           git checkout gh-pages
-          git rm -rf .
+          rm -rf *
           git commit -m "Remove existing files from gh-pages"
           git push
+          git checkout master
       
       # Copy the built files to the gh-pages branch
       - name: Copy Built Files to gh-pages Branch
