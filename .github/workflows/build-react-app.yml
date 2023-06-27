@@ -51,7 +51,7 @@ jobs:
       - name: Commit Changes to gh-pages Branch
         run: |
           git pull --rebase origin gh-pages
-          git add -A
+          git add .
           git commit -m "Build and deploy React app to gh-pages"
           git push --set-upstream origin gh-pages
           
