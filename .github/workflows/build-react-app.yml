@@ -5,9 +5,6 @@ on:
     branches:
       - master
 
-env:
-  REACT_APP_BASEURL: https://Mahdi-Hazrati.github.io/test-react-app-ci-cd
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -23,15 +20,19 @@ jobs:
           node-version: '18.x'
           
       # Install dependencies and build the React app
-      - name: Install Dependencies and Build React App
+      - name: Install React App Dependencies
         run: |
           npm install
+      - name: Build React App
+        run: |
           npm run build --if-present
           
       # Configure git user
       - name: Configure Git User
         env:
-          GIT_USERNAME: Mahdi Hazrati
+        # Your Name For Commit
+          GIT_USERNAME: Mahdi Hazrati 
+        # Your Email For Commit
           GIT_USEREMAIL: MahdiHazratiMailBox@gmail.com
         run: |
           git config --local user.name "${GIT_USERNAME}"
@@ -43,6 +44,7 @@ jobs:
           mkdir -p .deploy
           mv build/* .deploy/
           git checkout -b gh-pages || git branch gh-pages
+          rm -rf *
           rsync -av .deploy/ .
           
       # Commit the changes to the gh-pages branch
@@ -53,12 +55,3 @@ jobs:
           git commit -m "Build and deploy React app to gh-pages"
           git push --set-upstream origin gh-pages
           
-
-# Here's a quick overview of what this workflow does:
-# It listens for pushes to the master branch.
-# When a push event is triggered, it checks out the code from the repo and sets up Node.js.
-# It then installs any dependencies and builds the React app.
-# Next, it configures Git user information and copies the built files to the gh-pages branch.
-# It commits the changes to the gh-pages branch with a commit message of "Build and deploy React app to gh-pages".
-# Finally, it pushes the changes to the remote gh-pages branch.
-# Note that you'll need to replace <username> and <repository> in the REACT_APP_BASEURL environment variable with your actual GitHub username and repository name, respectively. This ensures that the React app can correctly resolve any relative URLs when deployed to the GitHub Pages domain. Also, make sure that the gh-pages branch exists in your GitHub repo before running this workflow.
