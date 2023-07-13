@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/test-react-app-ci-cd/static/js/main.eb508809.js",
+    "index.html": "/test-react-app-ci-cd/index.html",
+    "main.eb508809.js.map": "/test-react-app-ci-cd/static/js/main.eb508809.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.eb508809.js"
+  ]
+}
