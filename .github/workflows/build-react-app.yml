@@ -44,12 +44,12 @@ jobs:
           mkdir -p .deploy
           mv build/* .deploy/
           git checkout -b gh-pages || git branch gh-pages
-          rm -r ./*
-          rsync -av .deploy/ .
+          rsync -av .deploy/
           
       # Commit the changes to the gh-pages branch
       - name: Commit Changes to gh-pages Branch
         run: |
+          git pull --rebase origin gh-pages
           git add .
           git commit -m "Build and deploy React app to gh-pages"
           git push --set-upstream origin gh-pages
